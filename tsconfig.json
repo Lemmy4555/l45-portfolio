@@ -1,0 +1,25 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "outDir": "./ng-build/out-tsc",
+    "module": "commonjs",
+    "sourceMap": true,
+    "declaration": false,
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "target": "es5",
+    "skipLibCheck": true,
+    "lib": ["dom", "es2017"],
+    "allowSyntheticDefaultImports": true,
+    "baseUrl": ".",
+    "paths": {
+      "app/*": ["src/app/*"],
+      "@angular/*": ["node_modules/@angular/*"]
+    },
+    "typeRoots": [
+      "node_modules/@types"
+    ],
+    "types": []
+  }
+}

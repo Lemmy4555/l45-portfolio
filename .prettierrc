@@ -1,0 +1,18 @@
+{
+  "semi": false,
+  "singleQuote": true,
+  "overrides": [
+    {
+      "files": "*.ts",
+      "options": {
+        "semi": false
+      }
+    },
+    {
+      "files": "*.*",
+      "options": {
+        "printWidth": 140
+      }
+    }
+  ]
+}
