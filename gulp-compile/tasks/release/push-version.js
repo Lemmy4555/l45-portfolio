@@ -2,8 +2,8 @@ const gulp = require('gulp')
 const exec = require('gulp-exec')
 const git = require('gulp-git')
 
-const globals = require('@gulp-compile/globals')
-const Log = require('@gulp-compile/Log')
+const globals = require('../../globals')
+const Log = require('../../Log')
 const log = new Log('push-version')
 
 const execOptions = {

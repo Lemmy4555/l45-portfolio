@@ -2,7 +2,7 @@ const gulp = require('gulp')
 const sass = require('gulp-sass')
 const sourcemaps = require('gulp-sourcemaps')
 
-const variables = require('@gulp-compile/globals')
+const variables = require('../../globals')
 
 module.exports = () => {
   let stream = gulp.src([`${variables.config.paths.src.relative}/index.scss`, `${variables.config.paths.src.relative}/vendors.scss`])

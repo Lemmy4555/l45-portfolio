@@ -1,7 +1,7 @@
 const browserSync = require('browser-sync')
 const configFactory = require('./config')
 
-const Log = require('@gulp-compile/Log')
+const Log = require('../../Log')
 const log = new Log('browser-sync')
 
 let reloadTimeout = null
@@ -20,9 +20,6 @@ const server = () => {
       })
       
       browser.watch('dist/**/*.*').on('change', (file) => reload(file))
-      browser.watch('dist/index.html').on('change', () => reload())
-      browser.watch('dist/**/*.js').on('change', () => reload())
-      browser.watch('dist/**/*.js.map').on('change', () => reload())
     } catch (err) {
       console.error(log.message(err))
       reject(err)
@@ -35,9 +32,15 @@ const reload = (file) => {
     clearTimeout(reloadTimeout)
     reloadTimeout = null
   }
-
+  
   reloadTimeout = setTimeout(() => {
-    browser.reload(file)
+    if(/^.+(\.js|\.js\.map|\.html)$/g.test(file)) {
+      console.info(log.message('Reloading page...'))
+      browser.reload()
+    } else {
+      console.info(log.message(`Reloading file ${file}`))
+      browser.reload(file)
+    }
   }, 1000)
 }
 

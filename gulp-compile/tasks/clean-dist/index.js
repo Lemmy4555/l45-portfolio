@@ -1,6 +1,6 @@
 const del = require('del');
 
-let variables = require('@gulp-compile/globals')
+let variables = require('../../globals')
 
 module.exports = () => {
   return del([

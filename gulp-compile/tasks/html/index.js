@@ -1,14 +1,17 @@
 const gulp = require('gulp')
 const nunjucksRender = require('gulp-nunjucks-render')
 
-const globals = require('@gulp-compile/globals')
+const globals = require('../../globals')
 
 module.exports = () => {
   return gulp
     .src(`${globals.config.paths.src.absolute}/index.html`)
     .pipe(
       nunjucksRender({
-        data: { production: globals.config.production },
+        data: { 
+          production: globals.config.production,
+          concatProdFiles: globals.config.concatProdFiles
+        },
         envOptions: {
           lstripBlocks: true,
           trimBlocks: true,

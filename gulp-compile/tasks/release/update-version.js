@@ -2,8 +2,8 @@ const gulp = require('gulp')
 const inquirer = require('inquirer')
 const bump = require('gulp-bump')
 
-const globals = require('@gulp-compile/globals')
-const Log = require('@gulp-compile/Log')
+const globals = require('../../globals')
+const Log = require('../../Log')
 const log = new Log('update-version')
 
 module.exports = () => {

@@ -1,4 +1,4 @@
-const variables = require('@gulp-compile/globals')
+const variables = require('../../globals')
 
 module.exports = () => {
   return {

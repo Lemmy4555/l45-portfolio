@@ -1,5 +1,5 @@
-const variables = require('@gulp-compile/globals')
-const Log = require('@gulp-compile/Log')
+const variables = require('../../globals')
+const Log = require('../../Log')
 const log = new Log('print-config')
 
 confLog = () =>

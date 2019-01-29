@@ -1,4 +1,4 @@
-const globals = require('@gulp-compile/globals')
+const globals = require('../../globals')
 
 const pushVersionTask = require('./push-version')
 const tagVersionTask = require('./tag-version')

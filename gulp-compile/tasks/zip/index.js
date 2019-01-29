@@ -1,7 +1,7 @@
 const gulp = require('gulp')
 const zip = require('gulp-zip');
 
-const globals = require('@gulp-compile/globals')
+const globals = require('../../globals')
 
 
 module.exports = () => {

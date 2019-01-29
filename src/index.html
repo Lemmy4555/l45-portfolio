@@ -6,9 +6,38 @@
   <base href="/">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
+
+  <link rel="stylesheet"
+    type="text/css"
+    href="/vendors.css">
+  <link>
+  <link rel="stylesheet"
+    type="text/css"
+    href="/index.css">
+  <link>
 </head>
 <body>
   <app-root></app-root>
+
+  <# nunjucks #>
+  <% if production -%>
+
+  <% if concatProdFiles -%>
+  <script src="/vendors.js"></script>
+  <script src="/app.js"></script>
+  <% else %>
+  <script src="/runtime.js"></script>
+  <script src="/polyfills.js"></script>
+  <script src="/vendor.js"></script>
+  <script src="/main.js"></script>
+  <% endif %>
+  
+  <% else %>
+  <script src="/runtime.js"></script>
+  <script src="/polyfills.js"></script>
+  <script src="/vendor.js"></script>
+  <script src="/main.js"></script>
+  <% endif %>
 </body>
 </html>

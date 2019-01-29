@@ -3,20 +3,20 @@ require('module-alias/register')
 const gulp = require('gulp')
 const runSequence = require('run-sequence')
 
-const browserSyncTask = require('@gulp-compile/tasks/browser-sync')
-const sassTask = require('@gulp-compile/tasks/sass')
-const ngBuildTask = require('@gulp-compile/tasks/ng-build')
-const htmlTask = require('@gulp-compile/tasks/html')
-const nodeModulesAssetsTask = require('@gulp-compile/tasks/node-modules-assets')
-const assetsTask = require('@gulp-compile/tasks/assets')
-const cleanDistTask = require('@gulp-compile/tasks/clean-dist')
-const printConfigTask = require('@gulp-compile/tasks/print-config')
-const setConfigTask = require('@gulp-compile/tasks/set-config')
-const readVersionTask = require('@gulp-compile/tasks/read-version')
-const releaseTask = require('@gulp-compile/tasks/release')
-const zipTask = require('@gulp-compile/tasks/zip')
+const browserSyncTask = require('./gulp-compile/tasks/browser-sync')
+const sassTask = require('./gulp-compile/tasks/sass')
+const ngBuildTask = require('./gulp-compile/tasks/ng-build')
+const htmlTask = require('./gulp-compile/tasks/html')
+const nodeModulesAssetsTask = require('./gulp-compile/tasks/node-modules-assets')
+const assetsTask = require('./gulp-compile/tasks/assets')
+const cleanDistTask = require('./gulp-compile/tasks/clean-dist')
+const printConfigTask = require('./gulp-compile/tasks/print-config')
+const setConfigTask = require('./gulp-compile/tasks/set-config')
+const readVersionTask = require('./gulp-compile/tasks/read-version')
+const releaseTask = require('./gulp-compile/tasks/release')
+const zipTask = require('./gulp-compile/tasks/zip')
 
-let variables = require('@gulp-compile/globals')
+let variables = require('./gulp-compile/globals')
 
 gulp.task('release', () => {
   return releaseTask()
@@ -43,7 +43,7 @@ gulp.task('print-config', () => {
 })
 
 gulp.task('config:dev', () => {
-  variables.config = require('@gulp-compile/config.dev')
+  variables.config = require('./gulp-compile/config.dev')
 })
 
 gulp.task('clean-dist', () => {
@@ -79,15 +79,15 @@ gulp.task('zip', () => {
 })
 
 gulp.task('sass:watch', () => {
-  return gulp.watch('./src/**/*.scss', ['sass'])
+  return gulp.watch('./src/**/*.scss', gulp.series('sass'))
 })
 
 gulp.task('html:watch', () => {
-  return gulp.watch('./src/index.html', ['html'])
+  return gulp.watch('./src/index.html', gulp.series('html'))
 })
 
 gulp.task('assets:watch', () => {
-  return gulp.watch('./src/assets/**/*.*', ['assets'])
+  return gulp.watch('./src/assets/**/*.*', gulp.series('assets'))
 })
 
 gulp.task('scripts:watch', () => {
@@ -96,50 +96,43 @@ gulp.task('scripts:watch', () => {
   return ngBuildTask()
 })
 
-gulp.task('default', ['build:dev:serve'])
-
 gulp.task('build:dev', done => {
-  runSequence(
-    ['set-config:dev', 'print-config', 'clean-dist'],
-    ['scripts', 'html', 'node-modules-assets', 'sass', 'assets'],
-    done
-  )
+  gulp.series(
+    gulp.parallel('set-config:dev', 'print-config', 'clean-dist'),
+    gulp.parallel('scripts', 'html', 'node-modules-assets', 'sass', 'assets'),
+  )(done)
 })
 
 gulp.task('build:prod', done => {
-  runSequence(
-    ['set-config:prod', 'print-config', 'clean-dist'],
-    ['scripts', 'html', 'node-modules-assets', 'sass', 'assets'],
-    done
-  )
+  gulp.series(
+    gulp.parallel('set-config:prod', 'print-config', 'clean-dist'),
+    gulp.parallel('scripts', 'html', 'node-modules-assets', 'sass', 'assets'),
+  )(done)
 })
 
 gulp.task('build:prod:release', done => {
-  runSequence(
+  gulp.series(
     'release',
-    ['set-config:prod', 'print-config', 'clean-dist'],
-    ['scripts', 'html', 'node-modules-assets', 'sass', 'assets'],
+    gulp.parallel('set-config:prod', 'print-config', 'clean-dist'),
+    gulp.parallel('scripts', 'html', 'node-modules-assets', 'sass', 'assets'),
     'zip',
-    done
-  )
+  )(done)
 })
 
 gulp.task('build:dev:serve', done => {
-  runSequence(
-    ['set-config:dev', 'print-config', 'clean-dist'],
-    ['scripts:watch', 'html', 'node-modules-assets', 'sass', 'assets'],
-    ['html:watch', 'sass:watch', 'assets:watch'],
-    'browser-sync',
-    done
-  )
+  gulp.series(
+    gulp.parallel('set-config:dev', 'print-config', 'clean-dist'),
+    gulp.parallel('scripts:watch', 'html', 'node-modules-assets', 'sass', 'assets'),
+    gulp.parallel('html:watch', 'sass:watch', 'assets:watch', 'browser-sync'),
+    )(done)
 })
 
 gulp.task('build:prod:serve', done => {
-  runSequence(
-    ['set-config:prod', 'print-config', 'clean-dist'],
-    ['scripts:watch', 'html', 'node-modules-assets', 'sass', 'assets'],
-    ['html:watch', 'sass:watch', 'assets:watch'],
-    'browser-sync',
-    done
-  )
+  gulp.series(
+    gulp.parallel('set-config:prod', 'print-config', 'clean-dist'),
+    gulp.parallel('scripts:watch', 'html', 'node-modules-assets', 'sass', 'assets'),
+    gulp.parallel('html:watch', 'sass:watch', 'assets:watch', 'browser-sync'),
+    )(done)
 })
+
+gulp.task('default', gulp.series('build:dev:serve'))

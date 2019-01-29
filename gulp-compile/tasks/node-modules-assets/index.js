@@ -1,16 +1,17 @@
 const gulp = require('gulp')
 const fs = require('fs')
 
-const variables = require('@gulp-compile/globals')
-const Log = require('@gulp-compile/Log')
+const variables = require('../../globals')
+const Log = require('../../Log')
 const log = new Log('font-awesome')
 
 module.exports = () => {
   const dist = variables.config.paths.dist.absolute
-  return Promise.all([
-    nodeModuleAssetCopy('@fortawesome/fontawesome-free', 'webfonts', 'fa-*.*', `${dist}/webfonts`),
-    nodeModuleAssetCopy('jstree', 'dist/themes/default', '*px.png', `${dist}/etc/designs/ddp-cms/assets/images`)
-  ])
+  // return Promise.all([
+  //   nodeModuleAssetCopy('@fortawesome/fontawesome-free', 'webfonts', 'fa-*.*', `${dist}/webfonts`),
+  //   nodeModuleAssetCopy('jstree', 'dist/themes/default', '*px.png', `${dist}/etc/designs/ddp-cms/assets/images`)
+  // ])
+  return Promise.resolve()
 }
 
 const nodeModuleAssetCopy = (nodeModuleName, assetFolderRelativePath, assetFilesWildcard, destPath) => {

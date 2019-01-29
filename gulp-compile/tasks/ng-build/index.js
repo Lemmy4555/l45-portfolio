@@ -3,8 +3,8 @@ const spawn = require('child_process').spawn
 const concat = require('gulp-concat');
 const rename = require("gulp-rename");
 
-const globals = require('@gulp-compile/globals')
-const Log = require('@gulp-compile/Log')
+const globals = require('../../globals')
+const Log = require('../../Log')
 const log = new Log('ng-build')
 
 module.exports = () => {
@@ -33,7 +33,11 @@ module.exports = () => {
       }
       compileTimeout = setTimeout(() => {
         if (globals.config.production) {
-          concatAndCopyProductionFilesInDist()
+          if (globals.config.concatProdFiles) {
+            concatAndCopyProductionFilesInDist()
+          } else {
+            copyProductionFilesInDist()
+          }
         } else {
           copyDevFilesInDist()
         }
@@ -69,6 +73,16 @@ const concatAndCopyProductionFilesInDist = ()  => {
     `${globals.config.paths.ngDist.relative}/main.js`
   ])
   .pipe(rename(`app.js`))
+  .pipe(gulp.dest(`${globals.config.paths.dist.relative}/`))
+}
+
+const copyProductionFilesInDist = () => {
+  gulp.src([
+    `${globals.config.paths.ngDist.relative}/runtime.js`,
+    `${globals.config.paths.ngDist.relative}/polyfills.js`,
+    `${globals.config.paths.ngDist.relative}/vendor.js`,
+    `${globals.config.paths.ngDist.relative}/main.js`,
+  ])
   .pipe(gulp.dest(`${globals.config.paths.dist.relative}/`))
 }
 
