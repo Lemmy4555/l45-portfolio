@@ -67,13 +67,13 @@ const concatAndCopyProductionFilesInDist = ()  => {
     `${globals.config.paths.ngDist.relative}/vendor.js`
   ])
   .pipe(concat('vendors.js'))
-  .pipe(gulp.dest(`${globals.config.paths.dist.relative}/`))
+  .pipe(gulp.dest(`${globals.config.paths.dist.browser.relative}/`))
 
   gulp.src([
     `${globals.config.paths.ngDist.relative}/main.js`
   ])
   .pipe(rename(`app.js`))
-  .pipe(gulp.dest(`${globals.config.paths.dist.relative}/`))
+  .pipe(gulp.dest(`${globals.config.paths.dist.browser.relative}/`))
 }
 
 const copyProductionFilesInDist = () => {
@@ -83,7 +83,7 @@ const copyProductionFilesInDist = () => {
     `${globals.config.paths.ngDist.relative}/vendor.js`,
     `${globals.config.paths.ngDist.relative}/main.js`,
   ])
-  .pipe(gulp.dest(`${globals.config.paths.dist.relative}/`))
+  .pipe(gulp.dest(`${globals.config.paths.dist.browser.relative}/`))
 }
 
 const copyDevFilesInDist = ()  => {
@@ -97,5 +97,5 @@ const copyDevFilesInDist = ()  => {
     `${globals.config.paths.ngDist.relative}/main.js`,
     `${globals.config.paths.ngDist.relative}/main.js.map`
   ])
-  .pipe(gulp.dest(`${globals.config.paths.dist.relative}/`))
+  .pipe(gulp.dest(`${globals.config.paths.dist.browser.relative}/`))
 }

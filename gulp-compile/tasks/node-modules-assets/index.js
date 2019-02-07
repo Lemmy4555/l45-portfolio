@@ -6,7 +6,7 @@ const Log = require('../../Log')
 const log = new Log('font-awesome')
 
 module.exports = () => {
-  const dist = variables.config.paths.dist.absolute
+  const dist = variables.config.paths.dist.browser.absolute
   // return Promise.all([
   //   nodeModuleAssetCopy('@fortawesome/fontawesome-free', 'webfonts', 'fa-*.*', `${dist}/webfonts`),
   //   nodeModuleAssetCopy('jstree', 'dist/themes/default', '*px.png', `${dist}/etc/designs/ddp-cms/assets/images`)

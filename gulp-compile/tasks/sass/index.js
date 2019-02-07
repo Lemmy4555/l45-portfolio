@@ -22,5 +22,5 @@ module.exports = () => {
     stream = stream.pipe(sourcemaps.write('./'))
   }
 
-  return stream.pipe(gulp.dest(variables.config.paths.dist.relative))
+  return stream.pipe(gulp.dest(variables.config.paths.dist.browser.relative))
 }

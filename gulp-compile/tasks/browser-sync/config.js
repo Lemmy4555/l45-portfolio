@@ -14,10 +14,10 @@ module.exports = () => {
     watchOptions: {
       ignoreInitial: true
     },
-    server: variables.config.paths.dist.absolute,
+    server: variables.config.paths.dist.browser.absolute,
     proxy: false,
     port: variables.config.serverPort,
-    path: variables.config.paths.dist.absolute,
+    path: variables.config.paths.dist.browser.absolute,
     serveStatic: [],
     ghostMode: {
       clicks: false,

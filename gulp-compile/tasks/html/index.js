@@ -26,5 +26,5 @@ module.exports = () => {
         }
       })
     )
-    .pipe(gulp.dest(globals.config.paths.dist.absolute))
+    .pipe(gulp.dest(globals.config.paths.dist.browser.absolute))
 }

@@ -1,4 +1,5 @@
 const path = require('path')
+
 const basePath = path.resolve(__dirname, '..')
 
 config = {
@@ -22,6 +23,12 @@ config.paths.assets.relative = `${config.paths.src.relative}/assets`
 config.paths.dist = {}
 config.paths.dist.relative = `./${config.distFolder}`
 config.paths.dist.absolute = path.resolve(basePath, config.distFolder)
+config.paths.dist.browser = {}
+config.paths.dist.browser.relative = `${config.paths.dist.relative}/browser`
+config.paths.dist.browser.absolute = path.resolve(config.paths.dist.absolute, 'browser')
+config.paths.dist.server = {}
+config.paths.dist.server.relative = `${config.paths.dist.relative}/server`
+config.paths.dist.server.absolute = path.resolve(config.paths.dist.absolute, 'server')
 
 config.paths.ngDist = {}
 config.paths.ngDist.relative = `./ng-build`
