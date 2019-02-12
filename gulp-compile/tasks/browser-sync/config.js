@@ -1,8 +1,8 @@
-const variables = require('../../globals')
+const globals = require('../../globals')
 
 module.exports = () => {
   return {
-    cwd: variables.config.paths.cwd.absolute,
+    cwd: globals.config.paths.cwd.absolute,
     ui: {
       port: 3001,
       weinre: {
@@ -14,10 +14,10 @@ module.exports = () => {
     watchOptions: {
       ignoreInitial: true
     },
-    server: variables.config.paths.dist.browser.absolute,
+    server: globals.config.paths.dist.browser.absolute,
     proxy: false,
-    port: variables.config.serverPort,
-    path: variables.config.paths.dist.browser.absolute,
+    port: globals.config.serverPort,
+    path: globals.config.paths.dist.browser.absolute,
     serveStatic: [],
     ghostMode: {
       clicks: false,

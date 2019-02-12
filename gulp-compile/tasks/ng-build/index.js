@@ -1,101 +1,60 @@
-const gulp = require('gulp')
 const spawn = require('child_process').spawn
-const concat = require('gulp-concat');
-const rename = require("gulp-rename");
 
 const globals = require('../../globals')
 const Log = require('../../Log')
 const log = new Log('ng-build')
 
-module.exports = () => {
+module.exports = (taskToRun, onCompile) => {
   let compileTimeout = null
 
+  if (!taskToRun) {
+    return Promise.reject("Non e stato specificato nessun task da buildare con ng")
+  }
+
   return new Promise((resolve, reject) => {
-    let params = ['build']
+    let params = ['run', taskToRun]
     if (globals.config.watch) {
       params.push('--watch')
     }
     if (globals.config.sourcemaps) {
       params.push('--source-map')
     }
-    if (globals.config.production) {
-      params.push('--prod')
-    }
     
     ngBuild = spawn('ng', params, { shell: true })
 
     ngBuild.stdout.on('data', (data) => {
-      console.info(log.message(data.toString()))
+      console.info(log.message(`(${taskToRun}) ${data.toString()}`))
       
       if (compileTimeout) {
         clearTimeout(compileTimeout)
         compileTimeout = null
       }
-      compileTimeout = setTimeout(() => {
-        if (globals.config.production) {
-          if (globals.config.concatProdFiles) {
-            concatAndCopyProductionFilesInDist()
-          } else {
-            copyProductionFilesInDist()
-          }
-        } else {
-          copyDevFilesInDist()
-        }
-      }, 1000)
+
+      if (onCompile) {
+        compileTimeout = setTimeout(() => {
+          onCompile()
+        }, 1000)
+      }
       
     })
 
     ngBuild.stderr.on('data', (data) => {
-      console.error(log.message(data.toString()))
+      console.error(log.message(`(${taskToRun}) ${data.toString()}`))
     })
 
     ngBuild.on('exit', function (code) {
-      const error = `exit con codice: ${code.toString()}`
-      console.error(log.message(error))
-      reject(error)
+      if (code === 0) {
+        resolve()
+      } else {
+        const error = `exit con codice: ${code.toString()}`
+        console.error(log.message(`(${taskToRun}) ${error}`))
+        reject(error)
+      }
     })
-
-    console.info(log.message("Build di Angular in background"))
-    resolve()
+    
+    if (globals.config.watch) {
+      console.info(log.message("Build di Angular in background"))
+      resolve()
+    }
   })
-}
-
-const concatAndCopyProductionFilesInDist = ()  => {
-  gulp.src([
-    `${globals.config.paths.ngDist.relative}/runtime.js`,
-    `${globals.config.paths.ngDist.relative}/polyfills.js`,
-    `${globals.config.paths.ngDist.relative}/vendor.js`
-  ])
-  .pipe(concat('vendors.js'))
-  .pipe(gulp.dest(`${globals.config.paths.dist.browser.relative}/`))
-
-  gulp.src([
-    `${globals.config.paths.ngDist.relative}/main.js`
-  ])
-  .pipe(rename(`app.js`))
-  .pipe(gulp.dest(`${globals.config.paths.dist.browser.relative}/`))
-}
-
-const copyProductionFilesInDist = () => {
-  gulp.src([
-    `${globals.config.paths.ngDist.relative}/runtime.js`,
-    `${globals.config.paths.ngDist.relative}/polyfills.js`,
-    `${globals.config.paths.ngDist.relative}/vendor.js`,
-    `${globals.config.paths.ngDist.relative}/main.js`,
-  ])
-  .pipe(gulp.dest(`${globals.config.paths.dist.browser.relative}/`))
-}
-
-const copyDevFilesInDist = ()  => {
-  gulp.src([
-    `${globals.config.paths.ngDist.relative}/runtime.js`,
-    `${globals.config.paths.ngDist.relative}/runtime.js.map`,
-    `${globals.config.paths.ngDist.relative}/polyfills.js`,
-    `${globals.config.paths.ngDist.relative}/polyfills.js.map`,
-    `${globals.config.paths.ngDist.relative}/vendor.js`,
-    `${globals.config.paths.ngDist.relative}/vendor.js.map`,
-    `${globals.config.paths.ngDist.relative}/main.js`,
-    `${globals.config.paths.ngDist.relative}/main.js.map`
-  ])
-  .pipe(gulp.dest(`${globals.config.paths.dist.browser.relative}/`))
 }

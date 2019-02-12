@@ -4,7 +4,8 @@ let configDev = {
   production: false,
   uglify: false,
   sourceMaps: true,
-  watch: false
+  watch: false,
+  name: 'development-configuration'
 }
 
 let config = { ...configCommon, ...configDev }

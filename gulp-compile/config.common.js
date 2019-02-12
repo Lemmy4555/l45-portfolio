@@ -33,6 +33,12 @@ config.paths.dist.server.absolute = path.resolve(config.paths.dist.absolute, 'se
 config.paths.ngDist = {}
 config.paths.ngDist.relative = `./ng-build`
 config.paths.ngDist.absolute = path.resolve(basePath, "ng-build")
+config.paths.ngDist.browser = {}
+config.paths.ngDist.browser.relative = `${config.paths.ngDist.relative}/browser`
+config.paths.ngDist.browser.absolute = path.resolve(config.paths.ngDist.absolute, 'browser')
+config.paths.ngDist.server = {}
+config.paths.ngDist.server.relative = `${config.paths.ngDist.relative}/server`
+config.paths.ngDist.server.absolute = path.resolve(config.paths.ngDist.absolute, 'server')
 
 
 module.exports = config

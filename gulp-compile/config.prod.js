@@ -5,7 +5,8 @@ let configProd = {
   uglify: true,
   sourceMaps: false,
   watch: false,
-  concatProdFiles: false
+  concatProdFiles: false,
+  name: 'production-configuration'
 }
 
 let config = { ...configCommon, ...configProd }

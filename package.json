@@ -2,17 +2,19 @@
   "name": "l45-portfolio",
   "version": "0.0.0",
   "scripts": {
-    "start": "npm run build:dev:serve",
-    "build:dev:serve": "gulp build:dev:serve",
-    "build:prod:serve": "gulp build:prod:serve",
-    "build:dev": "gulp build:dev",
-    "build:prod": "gulp build:prod",
+    "start": "npm run build:browser:dev:serve",
+    "build:browser:dev:serve": "gulp build:browser:dev:serve",
+    "build:browser:prod:serve": "gulp build:browser:prod:serve",
+    "build:browser:dev": "gulp build:browser:dev",
+    "build:browser:prod": "gulp build:browser:prod",
+    "build:server:dev:serve": "gulp build:server:dev:serve",
+    "build:server:prod:serve": "gulp build:server:prod:serve",
+    "build:server:dev": "gulp build:server:dev",
+    "build:server:prod": "gulp build:server:prod",
+    "build:all:dev": "gulp build:all:dev",
+    "build:all:prod": "gulp build:all:prod",
     "release": "gulp build:prod:release",
-    "bundle-analyze": "ng build --prod --stats-json && webpack-bundle-analyzer ng-build/stats.json",
-    "webpack:server": "webpack --config webpack.server.config.js --progress --colors",
-    "build:ssr:prod": "npm run build:prod && ng run l45-portfolio:server:production && npm run webpack:server",
-    "build:ssr:dev": "npm run build:dev && ng run l45-portfolio:server && npm run webpack:server",
-    "serve:ssr": "node dist/server/server.js"
+    "bundle-analyze": "ng run l45-portfolio:build:production --stats-json && webpack-bundle-analyzer ng-build/browser/stats.json"
   },
   "private": true,
   "dependencies": {
@@ -69,6 +71,9 @@
     "ts-node": "~7.0.0",
     "tslint": "~5.11.0",
     "typescript": "~3.2.2",
-    "webpack-cli": "^3.2.3"
+    "webpack": "^4.29.3",
+    "webpack-bundle-analyzer": "^3.0.3",
+    "webpack-cli": "^3.2.3",
+    "webpack-stream": "^5.2.1"
   }
 }

@@ -1,6 +1,6 @@
 const fs = require('fs');
 
-const configDefault = require('./config.dev')
+const configDefault = require('./config.prod')
 
 let globals = {
   config: configDefault,

@@ -20,7 +20,7 @@
             "customWebpackConfig": {
               "path": "./extra-webpack.config.js"
             },
-            "outputPath": "ng-build",
+            "outputPath": "ng-build/browser",
             "index": "src/index.ng-build.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -111,7 +111,7 @@
         "server": {
           "builder": "@angular-devkit/build-angular:server",
           "options": {
-            "outputPath": "ng-build/l45-portfolio-server",
+            "outputPath": "ng-build/server",
             "main": "src/main.server.ts",
             "tsConfig": "src/tsconfig.server.json"
           },

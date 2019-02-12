@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, Inject, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +8,13 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'l45-portfolio';
+
+  constructor(@Inject(PLATFORM_ID) private platform: any) { }
+  
+  ngOnInit() {
+    if (isPlatformBrowser(this.platform)) {
+      // use localStorage API
+      console.log(window.location)
+    }
+  }
 }

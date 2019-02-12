@@ -5,7 +5,8 @@ let configDev = {
   uglify: true,
   sourceMaps: false,
   verboseStats: true,
-  bundleAnalyzer: true
+  bundleAnalyzer: true,
+  name: 'analyze-configuration'
 }
 
 let config = { ...configCommon, ...configDev }

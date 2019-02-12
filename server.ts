@@ -20,7 +20,7 @@ const PORT = process.env.PORT || 4000;
 const DIST_FOLDER = variables.config.paths.dist.browser.relative;
 
 // * NOTE :: leave this as require() since this file is built Dynamically from webpack
-const {AppServerModuleNgFactory, LAZY_MODULE_MAP} = require('./ng-build/l45-portfolio-server/main');
+const {AppServerModuleNgFactory, LAZY_MODULE_MAP} = require('./ng-build/server/main');
 
 // Our Universal express-engine (found @ https://github.com/angular/universal/tree/master/modules/express-engine)
 app.engine('html', ngExpressEngine({
